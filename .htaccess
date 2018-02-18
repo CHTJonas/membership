@@ -1,0 +1,6 @@
+<Files "ravenlogin.php">
+  AuthType Ucam-WebAuth
+  AACookieKey "verylongrandomstring"
+  Require valid-user
+  AADescription "Cambridge University Amateur Dramatic Club membership management system"
+</Files>
