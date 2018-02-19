@@ -20,15 +20,15 @@ class Member {
                                $primaryEmail, $secondaryEmail, $institution,
                                $graduationYear, $membershipType, $expiry) {
     $this->membershipId = $membershipId;
-    $this->crsid = $crsid;
-    $this->lastName = $lastName;
-    $this->otherNames = $otherNames;
-    $this->primaryEmail = $primaryEmail;
-    $this->secondaryEmail = $secondaryEmail;
-    $this->institution = $institution;
-    $this->graduationYear = $graduationYear;
-    $this->membershipType = $membershipType;
-    $this->expiry = $expiry;
+    $this->setCrsid($crsid);
+    $this->setLastName($lastName);
+    $this->setOtherNames($otherNames);
+    $this->setPrimaryEmail($primaryEmail);
+    $this->setSecondaryEmail($secondaryEmail);
+    $this->setInstitution($institution);
+    $this->setGraduationYear($graduationYear);
+    $this->setMembershipType($membershipType);
+    $this->setExpiry($expiry);
   }
 
   public static function memberFromPrimaryEmail($email) {
