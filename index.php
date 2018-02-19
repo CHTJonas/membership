@@ -1,6 +1,8 @@
 <?php
 
 require_once "Member.php";
+require_once "MembershipType.php";
+require_once "Institution.php";
 require_once "Version.php";
 session_start();
 session_regenerate_id();
@@ -92,7 +94,7 @@ if (!isset($_SESSION['authenticated'])) {
             <div class="form-group row">
               <label for="institutionSelect1" class="col-sm-2 col-form-label">Institution/College:</label>
               <div class="col-sm-10">
-                <select class="form-control" id="institutionSelect1" value="<?php echo $member->getInstitution(); ?>" disabled>
+                <select class="form-control" id="institutionSelect1" value="<?php echo Institution::toString($member->getInstitution()); ?>" disabled>
                   <option>ADC Theatre</option>
                   <option>Anglia Ruskin</option>
                   <option>Christ's</option>

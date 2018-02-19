@@ -152,8 +152,7 @@ class Member {
     if (!Institution::isValidName($institution)) {
       throw new Exception('Institution was not recognised.');
     }
-    $constant = Institution::fromString($institution);
-    $this->institution = new Institution($constant);
+    $this->institution = Institution::fromString($institution);
   }
 
   public function setGraduationYear($graduationYear) {
