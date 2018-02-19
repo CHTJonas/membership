@@ -149,9 +149,6 @@ class Member {
   }
 
   public function setInstitution($institution) {
-    if (!Institution::isValidName($institution)) {
-      throw new Exception('Institution was not recognised.');
-    }
     $this->institution = Institution::fromString($institution);
   }
 
