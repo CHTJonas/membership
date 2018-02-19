@@ -46,8 +46,17 @@ class Auth {
     $result = $stmt->get_result();
     if ($result->num_rows == 1) {
       return true;
-    } else {
+    }
+    // That didn't work so try querying primary_email instead
+    $email = $crsid . "@cam.ac.uk";
+    $stmt = $conn->prepare('SELECT * FROM members WHERE primary_email = ?');
+    $stmt->bind_param('s', $email);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    if ($result->num_rows != 1) {
       return false;
+    } else {
+      return true;
     }
   }
 
