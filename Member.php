@@ -83,7 +83,7 @@ class Member {
   }
 
   public function getMembershipId() {
-    return $this->$membershipId;
+    return $this->membershipId;
   }
 
   public function getCrsid() {
