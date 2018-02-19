@@ -94,41 +94,8 @@ if (!isset($_SESSION['authenticated'])) {
             <div class="form-group row">
               <label for="institutionSelect1" class="col-sm-2 col-form-label">Institution:</label>
               <div class="col-sm-10">
-                <select class="form-control" id="institutionSelect1" value="<?php echo Institution::toString($member->getInstitution()); ?>" disabled>
-                  <option>ADC Theatre</option>
-                  <option>Anglia Ruskin</option>
-                  <option>Christ's</option>
-                  <option>Churchill</option>
-                  <option>Clare</option>
-                  <option>Clare Hall</option>
-                  <option>Corpus Christi</option>
-                  <option>Darwin</option>
-                  <option>Downing</option>
-                  <option>Emmanuel</option>
-                  <option>Fitzwilliam</option>
-                  <option>Girton</option>
-                  <option>Gonville and Caius</option>
-                  <option>Homerton</option>
-                  <option>Hughes Hall</option>
-                  <option>Jesus</option>
-                  <option>King's</option>
-                  <option>Lucy Cavendish</option>
-                  <option>Magdalene</option>
-                  <option>Murray Edwards</option>
-                  <option>Newnham</option>
-                  <option>Pembroke</option>
-                  <option>Peterhouse</option>
-                  <option>Queens'</option>
-                  <option>Robinson</option>
-                  <option>St Catharine's</option>
-                  <option>St Edmund's</option>
-                  <option>St John's</option>
-                  <option>Selwyn</option>
-                  <option>Sidney Sussex</option>
-                  <option>Trinity College</option>
-                  <option>Trinity Hall</option>
-                  <option>Wolfson</option>
-                  <option>University Department</option>
+                <select class="form-control" id="institutionSelect1" disabled>
+<?php Institution::printHTML($member->getInstitution()); ?>
                 </select>
               </div>
             </div>

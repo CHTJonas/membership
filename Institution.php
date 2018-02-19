@@ -39,6 +39,20 @@ class Institution extends Enum {
   const Wolfson = 33;
   const University = 34;
 
+  public static function printHTML($numSelected) {
+    for ($x = 1; $x <= 34; $x++) {
+      echo "                  ";
+      if ($x == $numSelected) {
+        echo "<option selected=\"selected\">";
+      } else {
+        echo "<option>";
+      }
+      echo Self::toString($x);
+      echo "</option>";
+      echo "\n";
+    }
+  }
+
 }
 
 ?>
