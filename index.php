@@ -102,11 +102,8 @@ if (!isset($_SESSION['authenticated'])) {
             <div class="form-group row">
               <label for="membershipTypeSelect1" class="col-sm-2 col-form-label">Membership Type:</label>
               <div class="col-sm-10">
-                <select class="form-control" id="membershipTypeSelect1" value="<?php echo MembershipType::toString($member->getMembershipType()); ?>" disabled>
-                  <option>Ordinary Member</option>
-                  <option>Associate Member</option>
-                  <option>Special Member</option>
-                  <option>Honorary Member</option>
+                <select class="form-control" id="membershipTypeSelect1" disabled>
+<?php MembershipType::printHTML($member->getMembershipType()); ?>
                 </select>
               </div>
             </div>

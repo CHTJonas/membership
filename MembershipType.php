@@ -10,6 +10,20 @@ class MembershipType extends Enum {
   const Honorary = 4;
   const Unknown = 5;
 
+  public static function printHTML($numSelected) {
+    for ($x = 1; $x <= 5; $x++) {
+      echo "                  ";
+      if ($x == $numSelected) {
+        echo "<option selected=\"selected\">";
+      } else {
+        echo "<option>";
+      }
+      echo Self::toString($x);
+      echo "</option>";
+      echo "\n";
+    }
+  }
+
 }
 
 ?>
