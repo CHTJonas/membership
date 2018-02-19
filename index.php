@@ -150,7 +150,10 @@ if (!isset($_SESSION['authenticated'])) {
             <div class="form-group row">
               <label for="inputExpiry3" class="col-sm-2 col-form-label">Expiry Date</label>
               <div class="col-sm-10">
-                <input type="text" class="form-control" id="inputExpiry3" placeholder="Expiry Date" value="<?php echo $member->getExpiry(); ?>" disabled>
+                <input type="text" class="form-control" id="inputExpiry3" placeholder="Expiry Date" aria-describedby="expiryHelpBlock" value="<?php echo $member->getExpiry(); ?>" disabled>
+                <small id="expiryHelpBlock" class="form-text text-muted">
+                  dd-mm-yyyy
+                </small>
               </div>
             </div>
             <div class="form-group row mt-2">

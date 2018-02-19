@@ -188,10 +188,9 @@ class Member {
   }
 
   public function setExpiry($expiry) {
-    if ($expiry instanceof DateTime) {
-      $this->expiry = $expiry;
-    } else {
-    }
+    $time = strtotime($expiry);
+    $format = date('d-m-Y', $time);
+    $this->expiry = $format;
   }
 
 }
