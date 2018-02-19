@@ -2,6 +2,7 @@
 
 require_once "Database.php";
 require_once "MembershipType.php";
+require_once "Institution.php";
 
 class Member {
   private $membershipId;
@@ -106,6 +107,10 @@ class Member {
     return $this->secondaryEmail;
   }
 
+  public function getInstitution() {
+    return $this->institution;
+  }
+
   public function getGraduationYear() {
     return $this->graduationYear;
   }
@@ -145,6 +150,15 @@ class Member {
 
   public function setSecondaryEmail($secondaryEmail) {
     $this->secondaryEmail = $secondaryEmail;
+    return true;
+  }
+
+  public function setInstitution($institution) {
+    if (!Institution::isValidName($institution)) {
+      return false;
+    }
+    $constant = Institution::fromString($institution);
+    $this->institution = new Institution($constant);
     return true;
   }
 

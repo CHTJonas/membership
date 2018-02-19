@@ -2,8 +2,8 @@
 
 class Version {
   const MAJOR = 0;
-  const MINOR = 3;
-  const PATCH = 1;
+  const MINOR = 4;
+  const PATCH = 0;
 
   public static function getVersion() {
     $commitNumber = trim(exec('git rev-list --count HEAD'));
