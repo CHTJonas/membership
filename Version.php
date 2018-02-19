@@ -2,7 +2,7 @@
 
 class Version {
   const MAJOR = 0;
-  const MINOR = 11;
+  const MINOR = 12;
   const PATCH = 0;
 
   public static function getVersion() {

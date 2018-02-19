@@ -120,7 +120,11 @@ class Member {
   }
 
   public function getExpiry() {
-    return $this->expiry;
+    if ($this->expiry === "01-01-1970") {
+      return "N/A";
+    } else {
+      return $this->expiry;
+    }
   }
 
   public function setMembershipId($membershipId) {
