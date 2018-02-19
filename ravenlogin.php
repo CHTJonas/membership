@@ -10,7 +10,7 @@ if (isset($_SESSION['authenticated'])) {
   $authEngine = Auth::getInstance();
   if ($authEngine->raven($crsid)) {
       $_SESSION['authenticated'] = true;
-      $_SESSION['id'] = null;
+      $_SESSION['crsid'] = $crsid;
       header('Location: /');
       return;
   } else {

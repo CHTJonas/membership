@@ -56,6 +56,10 @@ class Auth {
     if ($result->num_rows != 1) {
       return false;
     } else {
+      // Fix it for next time
+      $stmt = $conn->prepare('UPDATE members SET crsid = ? WHERE primary_email = ?');
+      $stmt->bind_param('ss', $crsid, $email);
+      $stmt->execute();
       return true;
     }
   }

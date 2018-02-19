@@ -1,4 +1,5 @@
 <?php
+
 require_once "Auth.php";
 session_start();
 
@@ -12,7 +13,7 @@ if (isset($_SESSION['authenticated'])) {
        $authEngine = Auth::getInstance();
        if ($authEngine->authenticate($email, $password)) {
            $_SESSION['authenticated'] = true;
-           $_SESSION['id'] = null;
+           $_SESSION['primaryEmail'] = $email;
            header('Location: /');
            return;
        } else {
