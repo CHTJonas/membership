@@ -31,14 +31,14 @@ abstract class Enum {
       $constants = self::getConstants();
       return $constants[$name];
     }
-    return false;
+    throw new Exception('String argument is not an enumerated member.');
   }
 
   public static function toString($value) {
     if (self::isValidValue($value)) {
       return array_search($value, self::getConstants());
     }
-    return false;
+    throw new Exception('Value argument is not an enumerated member.');
   }
 }
 

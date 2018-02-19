@@ -125,55 +125,48 @@ class Member {
 
   public function setMembershipId($membershipId) {
     // Can't change membership id
-    return false;
+    throw new Exception('Cannot change a membership ID value.');
   }
 
   public function setCrsid($crsid) {
     $this->crsid = $crsid;
-    return true;
   }
 
   public function setLastName($lastName) {
     $this->lastName = $lastName;
-    return true;
   }
 
   public function setOtherNames($otherNames) {
     $this->otherNames = $otherNames;
-    return true;
   }
 
   public function setPrimaryEmail($primaryEmail) {
     $this->primaryEmail = $primaryEmail;
-    return true;
   }
 
   public function setSecondaryEmail($secondaryEmail) {
     $this->secondaryEmail = $secondaryEmail;
-    return true;
   }
 
   public function setInstitution($institution) {
     if (!Institution::isValidName($institution)) {
-      return false;
+      throw new Exception('Institution was not recognised.');
     }
     $constant = Institution::fromString($institution);
     $this->institution = new Institution($constant);
-    return true;
   }
 
   public function setGraduationYear($graduationYear) {
     if (is_numeric($graduationYear)) {
       $this->graduationYear = $graduationYear;
-      return true;
     } else {
-      return false;
+      throw new Exception('Graduation date was not a recognised number.');
     }
   }
 
   public function setMembershipType($membershipType) {
     if (!MembershipType::isValidName($membershipType)) {
-      return false;
+      throw new Exception('Membership type was not recognised.');
     }
     $type = null;
     switch ($membershipType) {
@@ -192,15 +185,12 @@ class Member {
         $type = new MembershipType(MembershipType::Unknown);
     }
     $this->membershipType = $type;
-    return true;
   }
 
   public function setExpiry($expiry) {
     if ($expiry instanceof DateTime) {
       $this->expiry = $expiry;
-      return true;
     } else {
-      return false;
     }
   }
 
