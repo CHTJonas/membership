@@ -161,26 +161,7 @@ class Member {
   }
 
   public function setMembershipType($membershipType) {
-    if (!MembershipType::isValidName($membershipType)) {
-      throw new Exception('Membership type was not recognised.');
-    }
-    $type = null;
-    switch ($membershipType) {
-      case "Ordinary":
-        $type = new MembershipType(MembershipType::Ordinary);
-        break;
-      case "Associate":
-        $type = new MembershipType(MembershipType::Associate);
-        break;
-      case "Special":
-        $type = new MembershipType(MembershipType::Special);
-        break;
-      case "Honorary":
-        $type = new MembershipType(MembershipType::Honorary);
-      default:
-        $type = new MembershipType(MembershipType::Unknown);
-    }
-    $this->membershipType = $type;
+    $this->membershipType = MembershipType::fromString($membershipType);
   }
 
   public function setExpiry($expiry) {
