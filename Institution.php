@@ -38,9 +38,10 @@ class Institution extends Enum {
   const TitHall = 32;
   const Wolfson = 33;
   const University = 34;
+  const Unknown = 35;
 
   public static function printHTML($numSelected) {
-    for ($x = 1; $x <= 34; $x++) {
+    for ($x = 1; $x <= 35; $x++) {
       echo "                  ";
       if ($x == $numSelected) {
         echo "<option selected=\"selected\">";
