@@ -53,6 +53,12 @@ if (!isset($_SESSION['authenticated'])) {
               </div>
             </div>
             <div class="form-group row">
+              <label for="inputCamdramId3" class="col-sm-2 col-form-label">Camdram ID</label>
+              <div class="col-sm-10">
+                <input type="text" class="form-control" id="inputCamdramId3" placeholder="Camdram ID" value="<?php echo $member->getCamdramId(); ?>" disabled>
+              </div>
+            </div>
+            <div class="form-group row">
               <label for="inputOtherNames3" class="col-sm-2 col-form-label">First Name(s)</label>
               <div class="col-sm-10">
                 <input type="text" class="form-control" id="inputOtherNames3" placeholder="First Name(s)" value="<?php echo $member->getOtherNames(); ?>">
