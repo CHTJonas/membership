@@ -1,54 +1,45 @@
 <?php
 
-require_once "Enum.php";
+require_once "Database.php";
 
-class Institution extends Enum {
+class Institution {
 
-  const ADC = 1;
-  const ARU = 2;
-  const Christs = 3;
-  const Churchill = 4;
-  const Clare = 5;
-  const ClareHall = 6;
-  const Corpus = 7;
-  const Darwin = 8;
-  const Downing = 9;
-  const Emmanuel = 10;
-  const Fitzwilliam = 11;
-  const Girton = 12;
-  const Caius = 13;
-  const Homerton = 14;
-  const Hughes = 15;
-  const Jesus = 16;
-  const Kings = 17;
-  const Lucy = 18;
-  const Magdalene = 19;
-  const Medwards = 20;
-  const Newnham = 21;
-  const Pembroke = 22;
-  const Peterhouse = 23;
-  const Queens = 24;
-  const Robinson = 25;
-  const StCatharines = 26;
-  const StEdmunds = 27;
-  const StJohns = 28;
-  const Selwyn = 29;
-  const Sidney = 30;
-  const Trinity = 31;
-  const TitHall = 32;
-  const Wolfson = 33;
-  const University = 34;
-  const Unknown = 35;
+  public static function fromId($institutionId) {
+    $queryString = 'SELECT * FROM institutions';
+    $conn = Database::getInstance()->getConn();
+    $result = $conn->query($queryString);
+    while ($row = $result->fetch_assoc()) {
+      if ($institutionId == $row['institution_id']) {
+        return $row['institution_name'];
+      }
+    }
+    throw new Exception('Institution ID was not recognised as a valid institution.');
+  }
 
-  public static function printHTML($numSelected) {
-    for ($x = 1; $x <= 35; $x++) {
+  public static function fromName($institutionName) {
+    $queryString = 'SELECT * FROM institutions';
+    $conn = Database::getInstance()->getConn();
+    $result = $conn->query($queryString);
+    while ($row = $result->fetch_assoc()) {
+      if ($institutionName == $row['institution_name']) {
+        return $row['institution_id'];
+      }
+    }
+    throw new Exception('Institution name was not recognised as a valid institution.');
+  }
+
+  public static function printHTML($institutionId) {
+    $queryString = 'SELECT * FROM institutions';
+    $conn = Database::getInstance()->getConn();
+    $result = $conn->query($queryString);
+    while ($row = $result->fetch_assoc()) {
       echo "                  ";
-      if ($x == $numSelected) {
+      if ($row['institution_id'] == $institutionId) {
         echo "<option selected=\"selected\">";
       } else {
         echo "<option>";
       }
-      echo Self::toString($x);
+      echo $row['institution_name'];
       echo "</option>";
       echo "\n";
     }

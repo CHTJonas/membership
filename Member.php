@@ -5,86 +5,107 @@ require_once "MembershipType.php";
 require_once "Institution.php";
 
 class Member {
-  private $membershipId;
+  private $memberId;
+  private $camdramId;
   private $crsid;
   private $lastName;
   private $otherNames;
   private $primaryEmail;
   private $secondaryEmail;
-  private $institution;
+  private $institutionId;
   private $graduationYear;
-  private $membershipType;
+  private $membershipId;
   private $expiry;
 
-  private function __construct($membershipId, $crsid, $lastName, $otherNames,
-                               $primaryEmail, $secondaryEmail, $institution,
-                               $graduationYear, $membershipType, $expiry) {
-    $this->membershipId = $membershipId;
+  private function __construct($memberId, $camdramId, $crsid, $lastName, $otherNames,
+                               $primaryEmail, $secondaryEmail, $institutionId,
+                               $graduationYear, $membershipId, $expiry) {
+    $this->memberId = $memberId;
+    $this->setCamdramId($camdramId);
     $this->setCrsid($crsid);
     $this->setLastName($lastName);
     $this->setOtherNames($otherNames);
     $this->setPrimaryEmail($primaryEmail);
     $this->setSecondaryEmail($secondaryEmail);
-    $this->setInstitution($institution);
+    $this->setInstitutionId($institutionId);
     $this->setGraduationYear($graduationYear);
-    $this->setMembershipType($membershipType);
+    $this->setMembershipId($membershipId);
     $this->setExpiry($expiry);
   }
 
   public static function memberFromPrimaryEmail($email) {
     $conn = Database::getInstance()->getConn();
-    $stmt = $conn->prepare('SELECT * FROM members WHERE primary_email = ?');
+    $stmt = $conn->prepare('SELECT * FROM ((members
+                            INNER JOIN institutions
+                            ON members.institution_id =
+                                institutions.institution_id)
+                            INNER JOIN membership
+                            ON members.membership_id =
+                                membership.membership_id)
+                            WHERE primary_email = ?');
     $stmt->bind_param('s', $email);
     $stmt->execute();
     $result = $stmt->get_result();
     $row = $result->fetch_assoc();
-    $member = new Member($row['membership_id'], $row['crsid'], $row['last_name'],
-                        $row['other_names'], $row['primary_email'],
-                        $row['secondary_email'], $row['institution'],
-                        $row['graduation_year'], $row['membership_type'],
-                        $row['expiry']);
+    $member = new Member($row['member_id'], $row['camdram_id'], $row['crsid'],
+                        $row['last_name'], $row['other_names'],
+                        $row['primary_email'], $row['secondary_email'],
+                        $row['institution_id'], $row['graduation_year'],
+                        $row['membership_id'], $row['expiry']);
     return $member;
   }
 
   public static function memberFromCrsid($crsid) {
     $conn = Database::getInstance()->getConn();
-    $stmt = $conn->prepare('SELECT * FROM members WHERE crsid = ?');
+    $stmt = $conn->prepare('SELECT * FROM ((members
+                            INNER JOIN institutions
+                            ON members.institution_id =
+                                institutions.institution_id)
+                            INNER JOIN membership
+                            ON members.membership_id =
+                                membership.membership_id)
+                            WHERE crsid = ?');
     $stmt->bind_param('s', $crsid);
     $stmt->execute();
     $result = $stmt->get_result();
     $row = $result->fetch_assoc();
-    $member = new Member($row['membership_id'], $row['crsid'], $row['last_name'],
-                        $row['other_names'], $row['primary_email'],
-                        $row['secondary_email'], $row['institution'],
-                        $row['graduation_year'], $row['membership_type'],
-                        $row['expiry']);
+    $member = new Member($row['member_id'], $row['camdram_id'], $row['crsid'],
+                        $row['last_name'], $row['other_names'],
+                        $row['primary_email'], $row['secondary_email'],
+                        $row['institution_id'], $row['graduation_year'],
+                        $row['membership_id'], $row['expiry']);
     return $member;
   }
 
   public function flushToDatabase() {
     $conn = Database::getInstance()->getConn();
-    $stmt = $conn->prepare('UPDATE members SET crsid = ?,
+    $stmt = $conn->prepare('UPDATE members SET camdram_id = ?,
+                                               crsid = ?,
                                                last_name = ?,
                                                other_names = ?,
                                                primary_email = ?,
                                                secondary_email = ?,
-                                               institution = ?,
+                                               institution_id = ?,
                                                graduation_year = ?,
-                                               membership_type = ?
+                                               membership_id = ?
                                                expiry = ?
-                            WHERE membership_id = ?');
-    $stmt->bind_param('sssssssss', $this->crsid, $this->lastName,
-                                   $this->otherNames, $this->primaryEmail,
-                                   $this->secondaryEmail, $this->institution,
-                                   $this->graduationYear, $this->membershipType,
-                                   $this->expiry);
+                            WHERE member_id = ?');
+    $stmt->bind_param('ssssssssss', $this->camdramId, $this->crsid,
+                                   $this->lastName, $this->otherNames,
+                                   $this->primaryEmail, $this->secondaryEmail,
+                                   $this->institutionId, $this->graduationYear,
+                                   $this->membershipType, $this->expiry);
     $stmt->execute();
     $result = $stmt->get_result();
     return $result;
   }
 
-  public function getMembershipId() {
-    return $this->membershipId;
+  public function getMemberId() {
+    return $this->memberId;
+  }
+
+  public function getCamdramId() {
+    return $this->camdramId;
   }
 
   public function getCrsid() {
@@ -107,29 +128,33 @@ class Member {
     return $this->secondaryEmail;
   }
 
-  public function getInstitution() {
-    return $this->institution;
+  public function getInstitutionId() {
+    return $this->institutionId;
   }
 
   public function getGraduationYear() {
     return $this->graduationYear;
   }
 
-  public function getMembershipType() {
-    return $this->membershipType;
+  public function getMembershipId() {
+    return $this->membershipId;
   }
 
   public function getExpiry() {
     if ($this->expiry === "01-01-1970") {
-      return "N/A";
+      return "LIFE";
     } else {
       return $this->expiry;
     }
   }
 
-  public function setMembershipId($membershipId) {
-    // Can't change membership id
-    throw new Exception('Cannot change a membership ID value.');
+  public function setMemberId($memberId) {
+    // member_id is the primary key
+    throw new Exception('You cannot change a membership ID.');
+  }
+
+  public function setCamdramId($camdramId) {
+    $this->camdramId = $camdramId;
   }
 
   public function setCrsid($crsid) {
@@ -152,20 +177,25 @@ class Member {
     $this->secondaryEmail = $secondaryEmail;
   }
 
-  public function setInstitution($institution) {
-    $this->institution = Institution::fromString($institution);
+  public function setInstitutionId($institutionId) {
+    // Check ID is valid
+    Institution::fromId($institutionId);
+    $this->institutionId = $institutionId;
   }
 
   public function setGraduationYear($graduationYear) {
+    // Alumni can adjust their graduation dates so don't validate beyond checking it's numeric
     if (is_numeric($graduationYear)) {
       $this->graduationYear = $graduationYear;
     } else {
-      throw new Exception('Graduation date was not a recognised number.');
+      throw new Exception('Graduation date was not recognised as a valid year.');
     }
   }
 
-  public function setMembershipType($membershipType) {
-    $this->membershipType = MembershipType::fromString($membershipType);
+  public function setMembershipId($membershipId) {
+    // Check ID is valid
+    MembershipType::fromId($membershipId);
+    $this->membershipId = $membershipId;
   }
 
   public function setExpiry($expiry) {

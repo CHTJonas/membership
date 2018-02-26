@@ -49,7 +49,7 @@ if (!isset($_SESSION['authenticated'])) {
             <div class="form-group row">
               <label for="inputMembershipId3" class="col-sm-2 col-form-label">Member Number</label>
               <div class="col-sm-10">
-                <input type="text" class="form-control" id="inputMembershipId3" placeholder="Member Number" value="<?php echo $member->getMembershipId(); ?>" disabled>
+                <input type="text" class="form-control" id="inputMembershipId3" placeholder="Member Number" value="<?php echo $member->getMemberId(); ?>" disabled>
               </div>
             </div>
             <div class="form-group row">
@@ -95,7 +95,7 @@ if (!isset($_SESSION['authenticated'])) {
               <label for="institutionSelect1" class="col-sm-2 col-form-label">Institution:</label>
               <div class="col-sm-10">
                 <select class="form-control" id="institutionSelect1" disabled>
-<?php Institution::printHTML($member->getInstitution()); ?>
+<?php Institution::printHTML($member->getInstitutionId()); ?>
                 </select>
               </div>
             </div>
@@ -103,7 +103,7 @@ if (!isset($_SESSION['authenticated'])) {
               <label for="membershipTypeSelect1" class="col-sm-2 col-form-label">Membership Type:</label>
               <div class="col-sm-10">
                 <select class="form-control" id="membershipTypeSelect1" disabled>
-<?php MembershipType::printHTML($member->getMembershipType()); ?>
+<?php MembershipType::printHTML($member->getMembershipId()); ?>
                 </select>
               </div>
             </div>
