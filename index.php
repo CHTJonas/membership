@@ -1,6 +1,7 @@
 <?php
 
 require_once "Member.php";
+require_once "History.php";
 require_once "MembershipType.php";
 require_once "Institution.php";
 require_once "Version.php";
@@ -13,8 +14,10 @@ if (!isset($_SESSION['authenticated'])) {
   $member = null;
   if (isset($_SESSION['primaryEmail'])) {
     $member = Member::memberFromPrimaryEmail($_SESSION['primaryEmail']);
+    History::log($member->getMemberId(), "New login via primary email.");
   } elseif (isset($_SESSION['crsid'])) {
     $member = Member::memberFromCrsid($_SESSION['crsid']);
+    History::log($member->getMemberId(), "New login via Raven.");
   } else {
     throw new Exception('Unable to create a new member instance.');
   }
