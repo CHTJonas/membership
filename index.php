@@ -125,7 +125,7 @@ if (!isset($_SESSION['authenticated'])) {
             <div class="form-group row mt-2">
               <div class="col-sm-10">
                 <button type="submit" class="btn btn-primary">Submit</button>
-                <small id="submitHelpBlock" class="form-text text-muted mt-3">
+                <small id="submitHelpBlock" class="form-text text-muted my-3">
                   Please email membership@cuadc.org if there is any incorrect information on this page which you cannot change yourself.
                 </small>
               </div>
