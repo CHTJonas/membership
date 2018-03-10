@@ -37,7 +37,7 @@ if (isset($_SESSION['authenticated'])) {
   <body>
     <div class="container">
       <form class="form-signin" role="form" action="login.php" method="POST">
-        <img class="mb-4" src="cuadc_logo.png" alt="" width="250" height="281">
+        <img class="mb-4" src="cuadc_logo.png" alt="" width="173" height="200">
         <h2 class="form-signin-heading">Please login</h2>
         <label for="inputUsername" class="sr-only">Primary Email</label>
         <input type="text" name="inputEmail" class="form-control" placeholder="Primary Email" required autofocus>
