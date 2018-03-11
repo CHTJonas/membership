@@ -2,8 +2,6 @@
 
 require_once "../Member.php";
 require_once "../History.php";
-require_once "../MembershipType.php";
-require_once "../Institution.php";
 require_once "../Version.php";
 session_start();
 session_regenerate_id();
@@ -18,9 +16,14 @@ if (!isset($_SESSION['authenticated'])) {
   // Not an administrator
   header("HTTP/1.1 401 Unauthorized");
   echo "401 Unauthorized";
+  // Log the event
+  $member = Member::memberFromCrsid($_SESSION['crsid']);
+  History::log($member->getMemberId(), "Access to administration page denied.");
   die();
 } else {
-
+  // Log the event
+  $member = Member::memberFromCrsid($_SESSION['crsid']);
+  History::log($member->getMemberId(), "Access to administration page granted.");
   // Create the admin UI
   ?>
   <!doctype html>
