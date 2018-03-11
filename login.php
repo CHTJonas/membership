@@ -38,11 +38,11 @@ if (isset($_SESSION['authenticated'])) {
     <div class="container">
       <form class="form-signin" role="form" action="login.php" method="POST">
         <img class="mb-4" src="cuadc_logo.png" alt="" width="173" height="200">
-        <h2 class="form-signin-heading">Please login</h2>
+        <h1 class="h3 mb-3 font-weight-normal">Please login</h1>
         <label for="inputUsername" class="sr-only">Primary Email</label>
-        <input type="text" name="inputEmail" class="form-control" placeholder="Primary Email" required autofocus>
+        <input type="email" id="inputEmail" class="form-control" placeholder="Primary Email" required autofocus>
         <label for="inputPassword" class="sr-only">Password</label>
-        <input type="password" name="inputPassword" class="form-control" placeholder="Password" required>
+        <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
         <p class="form-signin-warning"><?php echo $error; ?></p>
         <button class="btn btn-lg btn-primary btn-block" type="submit">Login</button>
         <h4 class="text-center my-3">or</h4>
