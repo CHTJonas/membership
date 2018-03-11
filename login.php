@@ -34,7 +34,7 @@ if (isset($_SESSION['authenticated'])) {
     <link rel="stylesheet" href="login.css">
     <title>CUADC MMC - Login</title>
   </head>
-  <body>
+  <body class="text-center">
     <div class="container">
       <form class="form-signin" role="form" action="login.php" method="POST">
         <img class="mb-4" src="cuadc_logo.png" alt="" width="173" height="200">
