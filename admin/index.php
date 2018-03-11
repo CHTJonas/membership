@@ -39,7 +39,7 @@ if (!isset($_SESSION['authenticated'])) {
         <header>
           <!-- Fixed navbar -->
           <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-            <a class="navbar-brand" href="#">CUADC Membership Management System</a>
+            <a class="navbar-brand" href="https://membership.cuadc.org/">CUADC Membership Management System</a>
             <div class="collapse navbar-collapse" id="navbarCollapse"></div>
           </nav>
         </header>
