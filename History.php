@@ -9,7 +9,7 @@ class History {
     $queryString = "INSERT INTO history (datetime, member_id, action)
               VALUES (CURRENT_TIMESTAMP, $user, '$action')";
     $result = $conn->query($queryString);
-    return result;
+    return $result;
   }
 }
 ?>
