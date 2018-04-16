@@ -54,16 +54,24 @@ class Camdram {
   }
 
   public function print() {
-    echo "<div class=\"alert alert-success\" role=\"alert\">";
+    echo '<div class="alert alert-success" role="alert">';
+    echo '<div class="row">';
     foreach ($this->members as $name) {
+      echo '<div class="col-sm-4">';
       echo $name . "\n";
+      echo '</div>';
     }
-    echo "</div>";
-    echo "<div class=\"alert alert-danger\" role=\"alert\">";
+    echo '</div>';
+    echo '</div>';
+    echo '<div class="alert alert-danger" role="alert">';
+    echo '<div class="row">';
     foreach ($this->nonMembers as $slug) {
+      echo '<div class="col-sm-4">';
       echo $slug . "\n";
+      echo '</div>';
     }
-    echo "</div>";
+    echo '</div>';
+    echo '</div>';
   }
 
   public static function checkShowMembers($slug) {
