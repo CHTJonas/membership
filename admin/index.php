@@ -52,18 +52,23 @@ if (!isset($_SESSION['authenticated'])) {
           <h1 class="mt-3 mb-5">Membership Administration</h1>
 
           <div class="alert alert-primary" role="alert">
+            <h3 class="mb-3">Joining &amp; Leaving</h3>
+            <a class="btn btn-primary" href="addmem.php" role="button">Add Member</a>
+            <a class="btn btn-primary" href="delmem.php" role="button">Delete Member</a>
+          </div>
+          <div class="alert alert-primary" role="alert">
             <h3 class="mb-3">Membership Enforcement</h3>
             <form class="form-inline" role="form" action="checkshow.php" method="GET">
               <div class="form-group mx-sm-3 mb-2">
                 <label for="showSlug" class="sr-only">Show Camdram Slug</label>
-                <input type="text" class="form-control" id="showSlug" placeholder="Show Camdram Slug">
+                <input type="text" class="form-control" name="showSlug" id="showSlug" placeholder="Show Camdram Slug">
               </div>
               <button type="submit" class="btn btn-primary mb-2">Check Show Membership</button>
             </form>
             <form class="form-inline" role="form" action="checkindividual.php" method="GET">
               <div class="form-group mx-sm-3 mb-2">
                 <label for="lastName" class="sr-only">Person's last name</label>
-                <input type="text" class="form-control" id="lastName" placeholder="Person's last name">
+                <input type="text" class="form-control" name="lastName" id="lastName" placeholder="Person's last name">
               </div>
               <button type="submit" class="btn btn-primary mb-2">Check Individual Membership</button>
             </form>
