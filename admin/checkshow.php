@@ -51,6 +51,8 @@ if (!isset($_SESSION['authenticated'])) {
         <!-- Begin page content -->
         <main role="main" class="container">
           <h1 class="mt-3 mb-5">Membership Administration</h1>
+          <a class="btn btn-dark mb-3" href="/admin" role="button">Go Back</a>
+          <a class="btn btn-dark mb-3" href="https://www.camdram.net/shows/<?php echo $_GET["showSlug"]; ?>" role="button">View show on Camdram</a>
 <?php Camdram::checkShowMembers($_GET["showSlug"]); ?>
         </main>
 

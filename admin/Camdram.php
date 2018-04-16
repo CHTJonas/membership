@@ -77,9 +77,6 @@ class Camdram {
   }
 
   public static function checkShowMembers($slug) {
-    echo '<a class="btn btn-dark mb-3" href="';
-    echo "https://www.camdram.net/shows/" . $slug;
-    echo '" role="button">View show on Camdram</a>';
     $i = self::getInstance();
     $peopleURLs = $i->getPeople($slug);
     foreach ($peopleURLs as $val) {
