@@ -33,6 +33,16 @@ class Member {
     $this->setExpiry($expiry);
   }
 
+  public static function searchByLastname($query) {
+    $conn = Database::getInstance()->getConn();
+    $stmt = $conn->prepare('SELECT * FROM members
+                            WHERE last_name LIKE ?');
+    $stmt->bind_param('s', "%" . $query . "%");
+    $stmt->execute();
+    $result = $stmt->get_result();
+    return $result;
+  }
+
   public static function memberFromCamdramId($id) {
     $conn = Database::getInstance()->getConn();
     $stmt = $conn->prepare('SELECT * FROM ((members
