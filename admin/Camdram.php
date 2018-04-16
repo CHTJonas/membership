@@ -55,6 +55,7 @@ class Camdram {
 
   public function print() {
     echo '<div class="alert alert-success" role="alert">';
+    echo '<h3 class="mb-3">Ordinary Members</h3>';
     echo '<div class="row">';
     foreach ($this->members as $name) {
       echo '<div class="col-sm-4">';
@@ -64,6 +65,7 @@ class Camdram {
     echo '</div>';
     echo '</div>';
     echo '<div class="alert alert-danger" role="alert">';
+    echo '<h3 class="mb-3">Non-Ordinary Members</h3>';
     echo '<div class="row">';
     foreach ($this->nonMembers as $slug) {
       echo '<div class="col-sm-4">';
@@ -75,8 +77,8 @@ class Camdram {
   }
 
   public static function checkShowMembers($slug) {
-    echo '<a class="btn btn-dark" href="';
-    echo "www.camdram.net/shows/" . $slug;
+    echo '<a class="btn btn-dark mb-3" href="';
+    echo "https://www.camdram.net/shows/" . $slug;
     echo '" role="button">View show on Camdram</a>';
     $i = self::getInstance();
     $peopleURLs = $i->getPeople($slug);
