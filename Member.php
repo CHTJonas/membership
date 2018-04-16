@@ -37,7 +37,8 @@ class Member {
     $conn = Database::getInstance()->getConn();
     $stmt = $conn->prepare('SELECT * FROM members
                             WHERE last_name LIKE ?');
-    $stmt->bind_param('s', "%" . $query . "%");
+    $query = "%" . $query . "%";
+    $stmt->bind_param('s', $query);
     $stmt->execute();
     $result = $stmt->get_result();
     return $result;

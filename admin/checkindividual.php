@@ -63,7 +63,7 @@ if ($result->num_rows == 0) {
 } else {
   while ($row = $result->fetch_assoc()) {
     echo '<div class="col-sm-4">';
-    echo $row['other_names'] . $row['last_name'];
+    echo $row['other_names'] . " " . $row['last_name'];
     echo '</div>';
   }
 }
