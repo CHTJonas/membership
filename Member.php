@@ -46,6 +46,9 @@ class Member {
     $stmt->bind_param('s', $email);
     $stmt->execute();
     $result = $stmt->get_result();
+    if ($result->num_rows == 0) {
+      throw new Exception("Member does not exist.");
+    }
     $row = $result->fetch_assoc();
     $member = new Member($row['member_id'], $row['camdram_id'], $row['crsid'],
                         $row['last_name'], $row['other_names'],
@@ -68,6 +71,9 @@ class Member {
     $stmt->bind_param('s', $crsid);
     $stmt->execute();
     $result = $stmt->get_result();
+    if ($result->num_rows == 0) {
+      throw new Exception("Member does not exist.");
+    }
     $row = $result->fetch_assoc();
     $member = new Member($row['member_id'], $row['camdram_id'], $row['crsid'],
                         $row['last_name'], $row['other_names'],
