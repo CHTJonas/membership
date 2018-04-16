@@ -47,20 +47,20 @@ class Camdram {
   private function validatePerson($id, $slug) {
     try {
       $member = Member::memberFromCamdramId($id);
-      array_push($members, $member->getOtherNames() . " " . $member->getLastName());
+      array_push($this->members, $member->getOtherNames() . " " . $member->getLastName());
     } catch (Exception $e) {
-      array_push($nonMembers, $slug);
+      array_push($this->nonMembers, $slug);
     }
   }
 
   public function print() {
     echo "<div class=\"alert alert-success\" role=\"alert\">";
-    foreach ($members as $name) {
+    foreach ($this->members as $name) {
       echo $name . "\n";
     }
     echo "</div>";
     echo "<div class=\"alert alert-danger\" role=\"alert\">";
-    foreach ($nonMembers as $slug) {
+    foreach ($this->nonMembers as $slug) {
       echo $slug . "\n";
     }
     echo "</div>";
@@ -70,7 +70,7 @@ class Camdram {
     echo '<a class="btn btn-dark" href="';
     echo "www.camdram.net/shows/" . $slug;
     echo '" role="button">View show on Camdram</a>';
-    $i = self::$instance;
+    $i = self::getInstance();
     $peopleURLs = $i->getPeople($slug);
     foreach ($peopleURLs as $val) {
       $id = $i->getIDs($val[0]);
