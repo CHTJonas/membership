@@ -33,6 +33,31 @@ class Member {
     $this->setExpiry($expiry);
   }
 
+  public static function memberFromCamdramId($id) {
+    $conn = Database::getInstance()->getConn();
+    $stmt = $conn->prepare('SELECT * FROM ((members
+                            INNER JOIN institutions
+                            ON members.institution_id =
+                                institutions.institution_id)
+                            INNER JOIN membership
+                            ON members.membership_id =
+                                membership.membership_id)
+                            WHERE camdram_id = ?');
+    $stmt->bind_param('s', $id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    if ($result->num_rows == 0) {
+      throw new Exception("Member does not exist.");
+    }
+    $row = $result->fetch_assoc();
+    $member = new Member($row['member_id'], $row['camdram_id'], $row['crsid'],
+                        $row['last_name'], $row['other_names'],
+                        $row['primary_email'], $row['secondary_email'],
+                        $row['institution_id'], $row['graduation_year'],
+                        $row['membership_id'], $row['expiry']);
+    return $member;
+  }
+
   public static function memberFromPrimaryEmail($email) {
     $conn = Database::getInstance()->getConn();
     $stmt = $conn->prepare('SELECT * FROM ((members

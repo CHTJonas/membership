@@ -50,13 +50,28 @@ if (!isset($_SESSION['authenticated'])) {
         <!-- Begin page content -->
         <main role="main" class="container">
           <h1 class="mt-3 mb-5">Membership Administration</h1>
-          <div class="alert alert-danger" role="alert">
-            <h5>Data Protection</h5>
-            <p>Do not leave this web page unattended.</p>
+
+          <div class="alert alert-primary" role="alert">
+            <h3 class="mb-3">Membership Enforcement</h3>
+            <form class="form-inline" role="form" action="checkshow.php" method="GET">
+              <div class="form-group mx-sm-3 mb-2">
+                <label for="showSlug" class="sr-only">Show Camdram Slug</label>
+                <input type="text" class="form-control" id="showSlug" placeholder="Show Camdram Slug">
+              </div>
+              <button type="submit" class="btn btn-primary mb-2">Check Show Membership</button>
+            </form>
+            <form class="form-inline" role="form" action="checkindividual.php" method="GET">
+              <div class="form-group mx-sm-3 mb-2">
+                <label for="lastName" class="sr-only">Person's last name</label>
+                <input type="text" class="form-control" id="lastName" placeholder="Person's last name">
+              </div>
+              <button type="submit" class="btn btn-primary mb-2">Check Individual Membership</button>
+            </form>
           </div>
-          <a class="btn btn-primary" href="checkshow.php" role="button">Check Show Membership</a>
-          <a class="btn btn-primary" href="checkindividual.php" role="button">Check Individual Membership</a>
-          <a class="btn btn-primary" href="ballotlist.php" role="button">Create Ballot List</a>
+          <div class="alert alert-primary" role="alert">
+            <h3 class="mb-3">Elections &amp; Voting</h3>
+            <a class="btn btn-primary" href="ballotlist.php" role="button">Create Ballot List</a>
+          </div>
         </main>
 
         <footer class="footer">

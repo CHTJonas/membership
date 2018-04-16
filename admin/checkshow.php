@@ -51,14 +51,7 @@ if (!isset($_SESSION['authenticated'])) {
         <!-- Begin page content -->
         <main role="main" class="container">
           <h1 class="mt-3 mb-5">Membership Administration</h1>
-          <div class="alert alert-danger" role="alert">
-            <h5>Data Protection</h5>
-            <p>Do not leave this web page unattended.</p>
-          </div><p>
-<?php
-$peopleURLs = Camdram::getInstance()->getPeople("2017-the-producers");
-foreach ($peopleURLs as $val) {echo $val[0] . "\n";}
-?></p>
+<?php Camdram::checkShowMembers($_GET["showSlug"]); ?>
         </main>
 
         <footer class="footer">
