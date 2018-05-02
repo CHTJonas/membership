@@ -1,0 +1,141 @@
+<?php
+
+require_once "../Member.php";
+require_once "../History.php";
+require_once "../MembershipType.php";
+require_once "../Institution.php";
+require_once "../Version.php";
+session_start();
+session_regenerate_id();
+
+if (!isset($_SESSION['authenticated'])) {
+  // Not logged in
+  header('Location: /login.php');
+} elseif (!isset($_SESSION['crsid'])) {
+  // CRSid not set
+  header('Location: /index.php');
+} elseif (!in_array($_SESSION['crsid'], Environment::admins)) {
+  // Not an administrator
+  header("HTTP/1.1 401 Unauthorized");
+  echo "401 Unauthorized";
+  // Log the event
+  $member = Member::memberFromCrsid($_SESSION['crsid']);
+  History::log($member->getMemberId(), "Access to add member page denied.");
+  die();
+} else {
+  // Log the event
+  $member = Member::memberFromCrsid($_SESSION['crsid']);
+  History::log($member->getMemberId(), "Access to add member page granted.");
+  // Create the admin UI
+  ?>
+  <!doctype html>
+  <html lang="en">
+    <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+      <meta name="description" content="">
+      <meta name="author" content="">
+      <link rel="shortcut icon" href="favicon.png">
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+      <link rel="stylesheet" href="../sticky-footer-navbar.css">
+      <title>CUADC MMC - Home</title>
+    </head>
+      <body>
+        <header>
+          <!-- Fixed navbar -->
+          <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+            <a class="navbar-brand" href="https://membership.cuadc.org/">CUADC Membership Management System</a>
+            <div class="collapse navbar-collapse" id="navbarCollapse"></div>
+          </nav>
+        </header>
+
+        <!-- Begin page content -->
+        <main role="main" class="container">
+          <h1 class="mt-3 mb-5">Add member</h1>
+          <form>
+            <div class="form-group row">
+              <label for="inputCamdramId3" class="col-sm-2 col-form-label">Camdram ID</label>
+              <div class="col-sm-10">
+                <input type="text" class="form-control" id="inputCamdramId3" placeholder="Camdram ID">
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="inputOtherNames3" class="col-sm-2 col-form-label">First Name(s)</label>
+              <div class="col-sm-10">
+                <input type="text" class="form-control" id="inputOtherNames3" placeholder="First Name(s)">
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="inputLastName3" class="col-sm-2 col-form-label">Last Name</label>
+              <div class="col-sm-10">
+                <input type="text" class="form-control" id="inputLastName3" placeholder="Last Name">
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="inputEmail3" class="col-sm-2 col-form-label">Primary Email</label>
+              <div class="col-sm-10">
+                <input type="email" class="form-control" id="inputEmail3" placeholder="Primary Email" aria-describedby="primaryHelpBlock">
+                <small id="primaryHelpBlock" class="form-text text-muted">
+                  For Cambridge students please use an @cam email address.
+                </small>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="inputEmail3" class="col-sm-2 col-form-label">Secondary Email</label>
+              <div class="col-sm-10">
+                <input type="email" class="form-control" id="inputEmail3" placeholder="Secondary Email" aria-describedby="secondaryHelpBlock">
+                <small id="secondaryHelpBlock" class="form-text text-muted">
+                  A non-University email address for the alumni mailing list.
+                </small>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="institutionSelect1" class="col-sm-2 col-form-label">Institution</label>
+              <div class="col-sm-10">
+                <select class="form-control" id="institutionSelect1">
+<?php Institution::printHTML(-1); ?>
+                </select>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="membershipTypeSelect1" class="col-sm-2 col-form-label">Membership Type</label>
+              <div class="col-sm-10">
+                <select class="form-control" id="membershipTypeSelect1">
+<?php MembershipType::printHTML(1); ?>
+                </select>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="inputGradYear3" class="col-sm-2 col-form-label">Year of Graduation</label>
+              <div class="col-sm-10">
+                <input type="text" class="form-control" id="inputGradYears3" placeholder="Year of Graduation">
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="inputExpiry3" class="col-sm-2 col-form-label">Expiry Date</label>
+              <div class="col-sm-10">
+                <input type="text" class="form-control" id="inputExpiry3" placeholder="Expiry Date" aria-describedby="expiryHelpBlock">
+                <small id="expiryHelpBlock" class="form-text text-muted">
+                  dd-mm-yyyy
+                </small>
+              </div>
+            </div>
+            <div class="form-group row mt-2">
+              <div class="col-sm-10">
+                <button type="submit" class="btn btn-primary">Submit</button>
+              </div>
+            </div>
+          </form>
+        </main>
+
+        <footer class="footer">
+          <div class="container">
+            <span class="text-muted">CUADC MMS <?php echo Version::getVersion(); ?></span>
+          </div>
+        </footer>
+      </body>
+  </html>
+<?php
+}
+
+?>
