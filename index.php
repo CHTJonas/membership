@@ -50,6 +50,58 @@ if (!isset($_SESSION['authenticated'])) {
           <h1 class="mt-3 mb-5">Manage your membersip</h1>
           <form>
             <div class="form-group row">
+              <label for="outputStatus" class="col-sm-2 col-form-label">Membership Status</label>
+              <div class="col-sm-10">
+<?php
+switch (MembershipType::fromId($member->getMembershipId())) {
+case "Ordinary": ?>
+                <div class="alert alert-success" id="outputStatus">
+                  You are an Ordinary Member.
+                  You may vote at meetings and elections.
+                  You may take part in shows.
+                </div>
+<?php break;
+case "Associate": ?>
+                <div class="alert alert-dark" id="outputStatus">
+                  You are an Associate Member.
+                  You may not vote at meetings and elections.
+                  You may not take part in shows.
+                </div>
+<?php break;
+case "Special": ?>
+                <div class="alert alert-info" id="outputStatus">
+                  You are a Special Member.
+                  You may not vote at meetings and elections.
+                  You may take part in specific shows, with the approval of the Committee.
+                </div>
+<?php break;
+case "Honorary": ?>
+                <div class="alert alert-info" id="outputStatus">
+                  You are an Honorary Member.
+                  You may not vote at meetings and elections.
+                  You may not take part in shows.
+                </div>
+<?php break;
+case "Suspended": ?>
+                <div class="alert alert-danger" id="outputStatus">
+                  You are suspended from the Club.
+                  You have no constitutional rights, other than to appeal your suspension.
+                  You may not vote at meetings and elections.
+                  You may not take part in shows.
+                </div>
+<?php break;
+case "Banned": ?>
+                <div class="alert alert-danger" id="outputStatus">
+                  You are banned from the Club.
+                  You have no constitutional rights.
+                  You may not vote at meetings and elections.
+                  You may not take part in shows.
+                </div>
+<?php break;
+} ?>
+              </div>
+            </div>
+            <div class="form-group row">
               <label for="inputMembershipId3" class="col-sm-2 col-form-label">Member Number</label>
               <div class="col-sm-10">
                 <input type="text" class="form-control" id="inputMembershipId3" placeholder="Member Number" value="<?php echo $member->getMemberId(); ?>" disabled>
