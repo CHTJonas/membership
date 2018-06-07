@@ -1,5 +1,6 @@
 <?php
 
+require_once "../Database.php";
 require_once "../Member.php";
 require_once "../History.php";
 require_once "../MembershipType.php";
@@ -21,6 +22,38 @@ if (!isset($_SESSION['authenticated'])) {
   // Log the event
   $member = Member::memberFromCrsid($_SESSION['crsid']);
   History::log($member->getMemberId(), "Access to add member page denied.");
+  die();
+} elseif (!empty($_POST["othernames"]) && !empty($_POST["lastname"]) && !empty($_POST["primemail"]) &&
+          !empty($_POST["institution"]) && !empty($_POST["memtype"]) && !empty($_POST["gradyear"])) {
+  $conn = Database::getInstance()->getConn();
+  $stmt = $conn->prepare('SELECT institution_id FROM institutions WHERE institution_name LIKE ?');
+  $query = "%" . $_POST["institution"] . "%";
+  $stmt->bind_param('s', $query);
+  $stmt->execute();
+  $result = $stmt->get_result();
+  $row = $result->fetch_assoc();
+  $institution = $row['institution_id'];
+
+  $stmt = $conn->prepare('SELECT membership_id FROM membership WHERE membership_name LIKE ?');
+  $query = "%" . $_POST["memtype"] . "%";
+  $stmt->bind_param('s', $query);
+  $stmt->execute();
+  $result = $stmt->get_result();
+  $row = $result->fetch_assoc();
+  $membershiptype = $row['membership_id'];
+
+  $stmt = $conn->prepare('INSERT INTO members (camdram_id,
+                                               last_name, other_names, primary_email,
+                                               secondary_email, institution_id, graduation_year,
+                                               membership_id, expiry)
+                                 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)');
+  $stmt->bind_param('sssssssss', $_POST["camid"], $_POST["lastname"], $_POST["othernames"],
+                                 $_POST["primemail"], $_POST["secemail"], $institution,
+                                 $_POST["gradyear"], $membershiptype, $_POST["expiry"]);
+  $stmt->execute();
+  echo "New records created successfully";
+  $stmt->close();
+  $conn->close();
   die();
 } else {
   // Log the event
@@ -52,69 +85,69 @@ if (!isset($_SESSION['authenticated'])) {
         <!-- Begin page content -->
         <main role="main" class="container">
           <h1 class="mt-3 mb-5">Add member</h1>
-          <form>
+          <form role="form" action="addmem.php" method="POST">
             <div class="form-group row">
-              <label for="inputCamdramId3" class="col-sm-2 col-form-label">Camdram ID</label>
+              <label for="camid" class="col-sm-2 col-form-label">Camdram ID</label>
               <div class="col-sm-10">
-                <input type="text" class="form-control" id="inputCamdramId3" placeholder="Camdram ID">
+                <input type="text" class="form-control" name="camid" id="camid" placeholder="Camdram ID">
               </div>
             </div>
             <div class="form-group row">
-              <label for="inputOtherNames3" class="col-sm-2 col-form-label">First Name(s)</label>
+              <label for="othernames" class="col-sm-2 col-form-label">First Name(s)</label>
               <div class="col-sm-10">
-                <input type="text" class="form-control" id="inputOtherNames3" placeholder="First Name(s)">
+                <input type="text" class="form-control" name="othernames" id="othernames" placeholder="First Name(s)">
               </div>
             </div>
             <div class="form-group row">
-              <label for="inputLastName3" class="col-sm-2 col-form-label">Last Name</label>
+              <label for="lastname" class="col-sm-2 col-form-label">Last Name</label>
               <div class="col-sm-10">
-                <input type="text" class="form-control" id="inputLastName3" placeholder="Last Name">
+                <input type="text" class="form-control" name="lastname" id="lastname" placeholder="Last Name">
               </div>
             </div>
             <div class="form-group row">
-              <label for="inputEmail3" class="col-sm-2 col-form-label">Primary Email</label>
+              <label for="primemail" class="col-sm-2 col-form-label">Primary Email</label>
               <div class="col-sm-10">
-                <input type="email" class="form-control" id="inputEmail3" placeholder="Primary Email" aria-describedby="primaryHelpBlock">
+                <input type="email" class="form-control" name="primemail" id="primemail" placeholder="Primary Email" aria-describedby="primaryHelpBlock">
                 <small id="primaryHelpBlock" class="form-text text-muted">
                   For Cambridge students please use an @cam email address.
                 </small>
               </div>
             </div>
             <div class="form-group row">
-              <label for="inputEmail3" class="col-sm-2 col-form-label">Secondary Email</label>
+              <label for="secemail" class="col-sm-2 col-form-label">Secondary Email</label>
               <div class="col-sm-10">
-                <input type="email" class="form-control" id="inputEmail3" placeholder="Secondary Email" aria-describedby="secondaryHelpBlock">
+                <input type="email" class="form-control" name="secemail" id="secemail" placeholder="Secondary Email" aria-describedby="secondaryHelpBlock">
                 <small id="secondaryHelpBlock" class="form-text text-muted">
                   A non-University email address for the alumni mailing list.
                 </small>
               </div>
             </div>
             <div class="form-group row">
-              <label for="institutionSelect1" class="col-sm-2 col-form-label">Institution</label>
+              <label for="institution" class="col-sm-2 col-form-label">Institution</label>
               <div class="col-sm-10">
-                <select class="form-control" id="institutionSelect1">
+                <select class="form-control" name="institution" id="institution">
 <?php Institution::printHTML(-1); ?>
                 </select>
               </div>
             </div>
             <div class="form-group row">
-              <label for="membershipTypeSelect1" class="col-sm-2 col-form-label">Membership Type</label>
+              <label for="memtype" class="col-sm-2 col-form-label">Membership Type</label>
               <div class="col-sm-10">
-                <select class="form-control" id="membershipTypeSelect1">
+                <select class="form-control" name="memtype" id="memtype">
 <?php MembershipType::printHTML(1); ?>
                 </select>
               </div>
             </div>
             <div class="form-group row">
-              <label for="inputGradYear3" class="col-sm-2 col-form-label">Year of Graduation</label>
+              <label for="gradyear" class="col-sm-2 col-form-label">Year of Graduation</label>
               <div class="col-sm-10">
-                <input type="text" class="form-control" id="inputGradYears3" placeholder="Year of Graduation">
+                <input type="text" class="form-control" name="gradyear" id="gradyear" placeholder="Year of Graduation">
               </div>
             </div>
             <div class="form-group row">
-              <label for="inputExpiry3" class="col-sm-2 col-form-label">Expiry Date</label>
+              <label for="expiry" class="col-sm-2 col-form-label">Expiry Date</label>
               <div class="col-sm-10">
-                <input type="text" class="form-control" id="inputExpiry3" placeholder="Expiry Date" aria-describedby="expiryHelpBlock">
+                <input type="text" class="form-control" name="expiry" id="expiry" placeholder="Expiry Date" aria-describedby="expiryHelpBlock">
                 <small id="expiryHelpBlock" class="form-text text-muted">
                   dd-mm-yyyy
                 </small>
