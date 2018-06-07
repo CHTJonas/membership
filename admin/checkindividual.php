@@ -51,16 +51,19 @@ if (!isset($_SESSION['authenticated'])) {
         <main role="main" class="container">
           <h1 class="mt-3 mb-5">Membership Administration</h1>
           <a class="btn btn-dark mb-3" href="/admin" role="button">Go Back</a>
-          <div class="alert alert-success" role="alert">
-            <h3 class="mb-3">Search Results</h3>
-            <div class="row">
 <?php
 $result = Member::searchByLastname($_GET["lastName"]);
 if ($result->num_rows == 0) {
+  echo '<div class="alert alert-danger" role="alert">';
+  echo '<h3 class="mb-3">Search Results</h3>';
+  echo '<div class="row">';
   echo '<div class="col-sm-4">';
   echo "No members found.";
   echo '</div>';
 } else {
+  echo '<div class="alert alert-success" role="alert">';
+  echo '<h3 class="mb-3">Search Results</h3>';
+  echo '<div class="row">';
   while ($row = $result->fetch_assoc()) {
     echo '<div class="col-sm-4">';
     echo $row['other_names'] . " " . $row['last_name'];
@@ -68,8 +71,6 @@ if ($result->num_rows == 0) {
   }
 }
 ?>
-            </div>
-          </div>
         </main>
 
         <footer class="footer">
