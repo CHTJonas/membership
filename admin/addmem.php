@@ -51,10 +51,45 @@ if (!isset($_SESSION['authenticated'])) {
                                  $_POST["primemail"], $_POST["secemail"], $institution,
                                  $_POST["gradyear"], $membershiptype, $_POST["expiry"]);
   $stmt->execute();
-  echo "New records created successfully";
   $stmt->close();
   $conn->close();
-  die();
+  ?>
+  <!doctype html>
+  <html lang="en">
+    <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+      <meta name="description" content="">
+      <meta name="author" content="">
+      <link rel="shortcut icon" href="favicon.png">
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgF$
+      <link rel="stylesheet" href="../sticky-footer-navbar.css">
+      <title>CUADC MMC - Add Member</title>
+    </head>
+      <body>
+        <header>
+          <!-- Fixed navbar -->
+          <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+            <a class="navbar-brand" href="https://membership.cuadc.org/">CUADC Membership Management System</a>
+            <div class="collapse navbar-collapse" id="navbarCollapse"></div>
+          </nav>
+        </header>
+
+        <!-- Begin page content -->
+        <main role="main" class="container">
+          <div class="alert alert-success" role="alert">
+            New member successfully added!
+          </div>
+        </main>
+
+        <footer class="footer">
+          <div class="container">
+            <span class="text-muted">CUADC MMS <?php echo Version::getVersion(); ?></span>
+          </div>
+        </footer>
+      </body>
+  </html>
+  <?php
 } else {
   // Log the event
   $member = Member::memberFromCrsid($_SESSION['crsid']);
@@ -71,7 +106,7 @@ if (!isset($_SESSION['authenticated'])) {
       <link rel="shortcut icon" href="favicon.png">
       <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
       <link rel="stylesheet" href="../sticky-footer-navbar.css">
-      <title>CUADC MMC - Home</title>
+      <title>CUADC MMC - Add Member</title>
     </head>
       <body>
         <header>
