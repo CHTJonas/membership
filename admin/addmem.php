@@ -77,8 +77,11 @@ if (!isset($_SESSION['authenticated'])) {
 
         <!-- Begin page content -->
         <main role="main" class="container">
+          <main role="main" class="container">
+          <h1 class="mt-3 mb-5">Add New Member</h1>
+          <a class="btn btn-dark mb-3" href="/admin" role="button">Go Back</a>
           <div class="alert alert-success" role="alert">
-            New member successfully added!
+            New member added successfully!
           </div>
         </main>
 
