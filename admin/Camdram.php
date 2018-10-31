@@ -25,7 +25,7 @@ class Camdram {
 
   private function getPeople($slug) {
     // Scrape HTML from the show
-    $url = "www.camdram.net/shows/" . $slug;
+    $url = "https://www.camdram.net/shows/" . $slug;
     $headers = array();
     $headers[] = "X-Application: CUADC MMS " . Version::getVersion();
     $html = Curl::getInstance()->HTTPget($url, $headers);
@@ -36,7 +36,7 @@ class Camdram {
   }
 
   private function getIDs($personURL) {
-    $url = "www.camdram.net" . $personURL . ".json";
+    $url = "https://www.camdram.net" . $personURL . ".json";
     $headers = array();
     $headers[] = "X-Application: CUADC MMS " . Version::getVersion();
     $json = Curl::getInstance()->HTTPget($url, $headers);
