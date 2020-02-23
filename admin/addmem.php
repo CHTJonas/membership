@@ -187,7 +187,7 @@ if (!isset($_SESSION['authenticated'])) {
               <div class="col-sm-10">
                 <input type="text" class="form-control" name="expiry" id="expiry" placeholder="Expiry Date" aria-describedby="expiryHelpBlock">
                 <small id="expiryHelpBlock" class="form-text text-muted">
-                  dd-mm-yyyy
+                  yyyy-mm-dd
                 </small>
               </div>
             </div>
